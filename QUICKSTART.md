@@ -1,73 +1,103 @@
 # LiDoKu - Quick Start Guide
 
+## 🎉 Your Site is Live!
+
+**Production URL:** https://lidoku.com
+
 ## What You Have
 
-A complete Next.js SPA for lidoku.com featuring:
-- Modern, responsive design with Tailwind CSS
-- Three training sections: Linux, Docker, Kubernetes
-- Optimized for Vercel deployment
-- TypeScript for type safety
-- SEO-friendly structure
+A complete Next.js training platform with:
+- ✓ Modern, responsive design
+- ✓ Home page with course cards
+- ✓ Dedicated pages for Linux, Docker, Kubernetes
+- ✓ Instructor profile (Suma Kadur)
+- ✓ Automatic deployments via Vercel
+- ✓ SSL certificate enabled
 
-## Deploy to Vercel in 3 Steps
+## Site Pages
 
-### Option 1: Deploy via GitHub (Recommended)
+- **Home:** https://lidoku.com
+- **Linux Course:** https://lidoku.com/linux
+- **Docker Course:** https://lidoku.com/docker
+- **Kubernetes Course:** https://lidoku.com/kubernetes
+
+## Make Updates
 
 ```bash
-# 1. Initialize Git and push to GitHub
-git init
+# 1. Edit your files (e.g., course content)
+# 2. Commit and push
 git add .
-git commit -m "Initial commit"
-git remote add origin https://github.com/YOUR_USERNAME/lidoku.git
-git push -u origin main
+git commit -m "Update course content"
+git push
 
-# 2. Go to vercel.com → Import Project → Select your repo → Deploy
-
-# 3. Add your domain in Vercel:
-#    Settings → Domains → Add lidoku.com
+# 3. Vercel automatically deploys in 2-3 minutes
+# 4. Check https://lidoku.com
 ```
 
-### Option 2: Deploy via Vercel CLI (Fastest)
+## Local Development
 
 ```bash
-# 1. Install and login
-npm install -g vercel
-vercel login
-
-# 2. Deploy
-vercel --prod
-
-# 3. Add domain in Vercel dashboard
+npm run dev      # Start dev server → http://localhost:3000
+npm run build    # Test production build
 ```
 
-## Local Preview
+## Customize Your Content
 
-```bash
-npm run dev      # Development mode (http://localhost:3000)
-npm run build    # Production build
-npm run start    # Production preview
+### Update Course Pages
+
+Edit these files to add your specific course details:
+- `app/linux/page.tsx` - Linux training content
+- `app/docker/page.tsx` - Docker training content
+- `app/kubernetes/page.tsx` - Kubernetes training content
+
+Each page has a highlighted section at the bottom for your custom content (pricing, enrollment, etc.)
+
+### Update Instructor Photo
+
+1. Add image to `public/` folder (e.g., `public/suma-kadur.jpg`)
+2. Edit `app/page.tsx` around line 150
+3. Replace the avatar div with:
+```tsx
+<img
+  src="/suma-kadur.jpg"
+  alt="Suma Kadur"
+  className="w-32 h-32 rounded-full object-cover"
+/>
 ```
 
-## Next Steps After Deployment
+### Update Home Page
 
-1. Verify your site at https://lidoku.com
-2. Check SSL certificate is active
-3. Test responsive design on mobile
-4. Customize content in `app/page.tsx`
-5. Add more pages as needed
+Edit `app/page.tsx` to modify:
+- Hero section (lines 26-51)
+- Course cards (lines 60-120)
+- About section (lines 124-189)
 
-## File Structure
+## Key Files
 
 ```
 oct2025/
 ├── app/
-│   ├── page.tsx         ← Main landing page (edit here)
-│   ├── layout.tsx       ← Site layout & metadata
-│   └── globals.css      ← Global styles
-├── DEPLOYMENT.md        ← Full deployment guide
-└── package.json         ← Dependencies
+│   ├── page.tsx              ← Home page
+│   ├── linux/page.tsx        ← Linux course page
+│   ├── docker/page.tsx       ← Docker course page
+│   ├── kubernetes/page.tsx   ← Kubernetes course page
+│   ├── layout.tsx            ← Site layout & metadata
+│   └── globals.css           ← Global styles
+├── public/                   ← Static files (images, etc.)
+├── DEPLOYMENT.md             ← Full deployment guide
+└── package.json              ← Dependencies
 ```
+
+## Quick Links
+
+- **Live Site:** https://lidoku.com
+- **Vercel Dashboard:** https://vercel.com/jayaramcloud/lidoku-oct2025
+- **GitHub Repo:** https://github.com/jayaramcloud/lidoku-oct2025
 
 ## Need Help?
 
-See DEPLOYMENT.md for detailed step-by-step instructions.
+See **DEPLOYMENT.md** for detailed documentation including:
+- Troubleshooting
+- Environment variables
+- Monitoring and analytics
+- Full command reference

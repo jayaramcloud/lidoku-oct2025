@@ -1,182 +1,224 @@
 # Deploying LiDoKu to Vercel
 
-This guide will walk you through deploying your Next.js site to Vercel and connecting it to your lidoku.com domain.
+Your LiDoKu site is now successfully deployed at **https://lidoku.com**
+
+This guide documents the deployment process and provides instructions for future updates.
 
 ## Prerequisites
 
-- A Vercel account (sign up at https://vercel.com)
-- Git installed on your computer
-- Your lidoku.com domain already added to Vercel
+- ✓ Vercel account at https://vercel.com
+- ✓ GitHub account with repository access
+- ✓ lidoku.com domain registered in Vercel
+- ✓ Git and Node.js installed locally
 
-## Step-by-Step Deployment Instructions
+## Deployment Process Used
 
-### Step 1: Initialize Git Repository
+### Step 1: Set Up SSH Authentication
+
+GitHub requires SSH or Personal Access Token for authentication:
 
 ```bash
-cd /home/jay/lidoku/oct2025
+# Generate SSH key
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Add key to GitHub
+# Go to: https://github.com/settings/ssh/new
+# Copy your public key: cat ~/.ssh/id_ed25519.pub
+# Paste and save
+
+# Configure Git remote for SSH
+git remote set-url origin git@github.com:USERNAME/REPOSITORY.git
+```
+
+### Step 2: Push Code to GitHub
+
+```bash
+# Initialize repository
 git init
 git add .
 git commit -m "Initial commit - LiDoKu training site"
-```
 
-### Step 2: Create GitHub Repository (Recommended)
-
-1. Go to https://github.com/new
-2. Create a new repository named "lidoku" (can be private or public)
-3. DO NOT initialize with README, .gitignore, or license (we already have these)
-4. Copy the repository URL
-
-### Step 3: Push to GitHub
-
-```bash
-# Replace YOUR_USERNAME with your GitHub username
-git remote add origin https://github.com/YOUR_USERNAME/lidoku.git
+# Add remote and push
+git remote add origin git@github.com:jayaramcloud/lidoku-oct2025.git
 git branch -M main
 git push -u origin main
 ```
 
-### Step 4: Deploy to Vercel (Method 1 - Via Dashboard)
+### Step 3: Deploy to Vercel via Dashboard
 
-1. Log in to https://vercel.com
-2. Click "Add New..." → "Project"
-3. Import your GitHub repository (lidoku)
-4. Vercel will auto-detect Next.js settings:
-   - **Framework Preset:** Next.js
-   - **Build Command:** `npm run build` (auto-detected)
-   - **Output Directory:** `.next` (auto-detected)
-   - **Install Command:** `npm install` (auto-detected)
-5. Click "Deploy"
-6. Wait 2-3 minutes for the build to complete
+1. **Log in to Vercel:**
+   - Go to https://vercel.com/dashboard
+   - Sign in with GitHub
 
-### Step 4 Alternative: Deploy via Vercel CLI
+2. **Import Project:**
+   - Click "Add New..." → "Project"
+   - Select your GitHub repository: `jayaramcloud/lidoku-oct2025`
+   - Click "Import"
 
-If you prefer using the command line:
+3. **Configure (Auto-detected):**
+   - Framework Preset: **Next.js** ✓
+   - Root Directory: `./`
+   - Build Command: `npm run build` ✓
+   - Output Directory: `.next` ✓
+   - Install Command: `npm install` ✓
+   - **Click "Deploy"**
 
-```bash
-# Install Vercel CLI globally
-npm install -g vercel
+4. **Wait for Build:**
+   - Build completes in 2-3 minutes
+   - You'll get a preview URL: `https://lidoku-oct2025.vercel.app`
 
-# Login to Vercel
-vercel login
+### Step 4: Connect Domain
 
-# Deploy (from your project directory)
-vercel
+1. **Add Domain:**
+   - Go to Project → Settings → Domains
+   - Click "Add Domain"
+   - Enter: `lidoku.com`
+   - Click "Add"
 
-# Follow the prompts:
-# - Set up and deploy? Yes
-# - Which scope? (select your account)
-# - Link to existing project? No
-# - Project name? lidoku
-# - Directory? ./
-# - Override settings? No
+2. **DNS Configuration:**
+   - Since lidoku.com is registered in Vercel, DNS is automatic ✓
+   - Domain shows "Valid Configuration" when ready
 
-# Deploy to production
-vercel --prod
+3. **Add www subdomain (Optional):**
+   - Click "Add Domain"
+   - Enter: `www.lidoku.com`
+   - Vercel provides CNAME value if needed
+
+4. **SSL Certificate:**
+   - Automatically provisioned by Vercel ✓
+   - Takes 1-2 minutes after DNS verification
+
+## Site Structure
+
 ```
-
-### Step 5: Connect Your Custom Domain (lidoku.com)
-
-1. In Vercel Dashboard, go to your project
-2. Click on "Settings" tab
-3. Click on "Domains" in the left sidebar
-4. You should see lidoku.com already listed (since you own it)
-5. Click "Add" and enter: `lidoku.com`
-6. Click "Add" again and enter: `www.lidoku.com`
-7. Vercel will automatically configure DNS (if managed by Vercel)
-
-### Step 6: Configure DNS (if not using Vercel DNS)
-
-If your domain DNS is NOT managed by Vercel:
-
-**For lidoku.com (root domain):**
-- Type: A
-- Name: @ (or leave blank)
-- Value: 76.76.19.19 (Vercel's IP)
-
-**For www.lidoku.com:**
-- Type: CNAME
-- Name: www
-- Value: cname.vercel-dns.com
-
-**Important:** DNS changes can take 1-48 hours to propagate.
-
-### Step 7: Verify Deployment
-
-1. Visit https://your-project.vercel.app (temporary URL)
-2. Once DNS propagates, visit https://lidoku.com
-3. Verify SSL certificate is active (should show padlock in browser)
+lidoku.com/              → Home page with all courses
+├── /linux              → Linux training page
+├── /docker             → Docker training page
+└── /kubernetes         → Kubernetes training page
+```
 
 ## Automatic Deployments
 
-Every time you push to the `main` branch on GitHub, Vercel will automatically:
-- Build your project
-- Run tests (if configured)
-- Deploy to production
-- Update lidoku.com
+Every time you push to the `main` branch, Vercel automatically:
+- Builds your project
+- Runs linting
+- Deploys to production
+- Updates https://lidoku.com
 
-### Making Updates
+## Making Updates
+
+### Update Course Content
 
 ```bash
-# Make your changes to the code
-# Then:
+# Edit files (e.g., app/linux/page.tsx)
+# Then commit and push:
 git add .
-git commit -m "Description of changes"
+git commit -m "Update Linux course content"
 git push
 
-# Vercel will automatically deploy in 2-3 minutes
+# Vercel deploys automatically in 2-3 minutes
+```
+
+### Update Home Page
+
+Edit `app/page.tsx` to modify:
+- Hero section
+- Course cards
+- About section (including instructor info)
+
+### Update Instructor Information
+
+The instructor section is in `app/page.tsx` starting at line 142.
+
+To add a real photo, replace the avatar placeholder:
+```tsx
+<img
+  src="/suma-kadur.jpg"
+  alt="Suma Kadur"
+  className="w-32 h-32 rounded-full object-cover"
+/>
+```
+
+Place the image in the `public/` folder.
+
+## Local Development
+
+```bash
+# Start development server
+npm run dev
+# Visit: http://localhost:3000
+
+# Test production build
+npm run build
+npm start
+
+# Run linter
+npm run lint
 ```
 
 ## Monitoring & Analytics
 
-- **Build Logs:** Vercel Dashboard → Your Project → Deployments → Click on a deployment
-- **Analytics:** Vercel Dashboard → Your Project → Analytics tab
-- **Domain Status:** Vercel Dashboard → Your Project → Settings → Domains
+- **Build Logs:** https://vercel.com/jayaramcloud/lidoku-oct2025/deployments
+- **Analytics:** Project Dashboard → Analytics tab
+- **Domain Status:** Project Dashboard → Settings → Domains
 
 ## Troubleshooting
 
-**Build fails:**
-- Check build logs in Vercel dashboard
-- Verify `npm run build` works locally
-- Check for missing dependencies
+### Build Fails
 
-**Domain not working:**
-- Verify DNS settings are correct
-- Wait for DNS propagation (use https://dnschecker.org)
-- Check domain configuration in Vercel dashboard
+1. Check build logs in Vercel dashboard
+2. Test locally: `npm run build`
+3. Check for TypeScript errors: `npm run lint`
 
-**404 errors:**
-- Ensure vercel.json is committed to repository
-- Check Next.js routing configuration
+### Domain Not Working
 
-## Environment Variables (Future)
+1. Verify DNS in Vercel: Settings → Domains
+2. Check status shows "Valid Configuration"
+3. Wait for DNS propagation (5-30 minutes typically)
+4. Test with: https://dnschecker.org
 
-If you need to add environment variables:
-1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
+### Hydration Warning
+
+If you see hydration errors in development, they're caused by browser extensions (Grammarly, etc.) and won't affect production. Already fixed with `suppressHydrationWarning` in layout.
+
+## Environment Variables
+
+To add environment variables (for future features):
+
+1. Go to: Project → Settings → Environment Variables
 2. Add your variables
-3. Redeploy the project
-
-## Support
-
-- Vercel Documentation: https://vercel.com/docs
-- Next.js Documentation: https://nextjs.org/docs
-- Vercel Support: https://vercel.com/support
+3. Redeploy or push a new commit
 
 ## Quick Commands Reference
 
 ```bash
-# Local development
-npm run dev          # Start dev server (http://localhost:3000)
-npm run build        # Build for production
-npm run start        # Start production server locally
-npm run lint         # Run ESLint
+# Development
+npm run dev          # Start dev server
+npm run build        # Production build
+npm run start        # Production server locally
+npm run lint         # Check code quality
 
-# Git deployment
-git add .
-git commit -m "Your message"
-git push
+# Git workflow
+git status           # Check changes
+git add .            # Stage all changes
+git commit -m "msg"  # Commit changes
+git push             # Deploy to Vercel (automatic)
 
-# Vercel CLI
-vercel               # Deploy to preview
-vercel --prod        # Deploy to production
-vercel logs          # View logs
+# SSH
+ssh -T git@github.com  # Test GitHub connection
 ```
+
+## Support Resources
+
+- **Next.js Docs:** https://nextjs.org/docs
+- **Vercel Docs:** https://vercel.com/docs
+- **Tailwind CSS:** https://tailwindcss.com/docs
+- **Vercel Support:** https://vercel.com/support
+
+## Site is Live! 🎉
+
+- **Production URL:** https://lidoku.com
+- **Vercel Dashboard:** https://vercel.com/jayaramcloud/lidoku-oct2025
+- **GitHub Repository:** https://github.com/jayaramcloud/lidoku-oct2025
+
+All updates pushed to the `main` branch will automatically deploy to production.
