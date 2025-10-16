@@ -183,16 +183,52 @@ export default function KubernetesCourse() {
             </div>
           </div>
 
-          {/* Placeholder for customization */}
-          <div className="mt-8 bg-teal-900/20 border border-teal-700 rounded-xl p-8">
-            <h3 className="text-xl font-bold text-teal-300 mb-4">
-              📝 Add Your Course Content Here
-            </h3>
-            <p className="text-gray-300">
-              Edit this file at <code className="bg-slate-800 px-2 py-1 rounded">app/kubernetes/page.tsx</code>
-              {' '}to add your specific course details, pricing, enrollment information, or any other
-              content you&apos;d like to include.
-            </p>
+          {/* Enrollment & Pricing */}
+          <div className="mt-8 bg-slate-900 border border-slate-700 rounded-xl p-8">
+            <h3 className="text-2xl font-bold text-teal-400 mb-6">Enrollment Information</h3>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">Course Format</h4>
+                <ul className="space-y-2 text-gray-300">
+                  <li>• Self-paced online learning</li>
+                  <li>• Lifetime access to course materials</li>
+                  <li>• Regular content updates</li>
+                  <li>• Community forum access</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-white mb-3">Support</h4>
+                <ul className="space-y-2 text-gray-300">
+                  <li>• Email support from instructors</li>
+                  <li>• Q&A sessions (monthly)</li>
+                  <li>• Peer community support</li>
+                  <li>• Course completion certificate</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-slate-700">
+              <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                  <p className="text-gray-400 mb-2">Course Investment</p>
+                  <p className="text-4xl font-bold text-white">Contact for Pricing</p>
+                  <p className="text-sm text-gray-400 mt-1">Flexible payment options available</p>
+                </div>
+                <div className="flex flex-col gap-3 w-full md:w-auto">
+                  <button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-4 rounded-lg transition transform hover:scale-105 whitespace-nowrap">
+                    Request Information
+                  </button>
+                  <Link
+                    href="/"
+                    className="text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold px-8 py-4 rounded-lg transition"
+                  >
+                    View All Courses
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
