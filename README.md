@@ -1,3 +1,5 @@
+> **Moved.** This site now lives in the monorepo [`jayaramcloud/lidoku-turbo`](https://github.com/jayaramcloud/lidoku-turbo) under `apps/landing` (history included), and deploys to Cloudflare Pages from there. This repo is kept read-only for reference.
+
 # LiDoKu - Linux, Docker & Kubernetes Training
 
 **Live Site:** https://lidoku.com
