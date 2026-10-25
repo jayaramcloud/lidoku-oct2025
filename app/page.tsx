@@ -1,199 +1,172 @@
+import { SiteFooter, SiteNav } from '@/components/site-chrome';
+import { TerminalDemo } from '@/components/terminal-demo';
+import { SIGNUP_URL, courses } from '@/lib/courses';
 import Link from 'next/link';
+
+const steps = [
+  {
+    title: 'Open a lesson',
+    text: 'Read the chapter on the left. Next to it, a terminal is already connecting.',
+  },
+  {
+    title: 'Get your own machine',
+    text: 'A fresh, isolated virtual machine starts for you in seconds. You are root. Break things freely; nobody else is on it.',
+  },
+  {
+    title: 'Do the work, check it',
+    text: 'Type the commands for real, then hit Check my work. Each step is verified on your machine, with a hint when something is off.',
+  },
+];
+
+const features = [
+  { title: 'Nothing to install', text: 'Everything runs in the browser tab. No VirtualBox, no Docker Desktop, no cloud account.' },
+  { title: 'A real machine, not a simulator', text: 'A Firecracker microVM with its own kernel and internet access: the same tech behind AWS Lambda.' },
+  { title: 'Safe to break', text: 'Each learner gets an isolated machine that is thrown away after the session. rm -rf / away.' },
+  { title: 'Feedback as you go', text: 'Lessons come with tasks that are checked on your machine, so you know when you got it right.' },
+];
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-      {/* Navigation */}
-      <nav className="bg-slate-900/50 backdrop-blur-sm border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-white">
-                Li<span className="text-blue-400">Do</span><span className="text-cyan-400">Ku</span>
-              </Link>
-            </div>
-            <div className="hidden md:flex space-x-8">
-              <a href="#linux" className="text-gray-300 hover:text-white transition">Linux</a>
-              <a href="#docker" className="text-gray-300 hover:text-white transition">Docker</a>
-              <a href="#kubernetes" className="text-gray-300 hover:text-white transition">Kubernetes</a>
-              <a href="#about" className="text-gray-300 hover:text-white transition">About</a>
+    <div className='min-h-screen'>
+      <SiteNav />
+
+      {/* Hero */}
+      <section className='bg-grid relative border-b border-white/10'>
+        <div className='mx-auto grid max-w-6xl items-center gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-28'>
+          <div>
+            <p className='mb-5 inline-flex items-center gap-2 border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-semibold text-brand'>
+              <span className='size-1.5 rounded-full bg-brand' /> Hands-on labs in your browser
+            </p>
+            <h1 className='text-balance text-4xl font-bold tracking-tight text-white sm:text-6xl'>
+              Learn Linux, Docker &amp; Kubernetes on a <span className='text-brand'>real machine</span>
+            </h1>
+            <p className='mt-6 max-w-xl text-lg text-zinc-400'>
+              Every lesson comes with your own isolated Linux machine, right next to the text. Ready in seconds, nothing to install, yours to
+              break.
+            </p>
+            <div className='mt-10 flex flex-col gap-3 sm:flex-row'>
+              <a href={SIGNUP_URL} className='bg-brand px-6 py-3 text-center font-semibold text-zinc-950 transition hover:brightness-110'>
+                Start learning
+              </a>
+              <a href='#how' className='border border-white/15 px-6 py-3 text-center font-semibold text-white transition hover:bg-white/5'>
+                See how it works
+              </a>
             </div>
           </div>
+          <TerminalDemo />
         </div>
-      </nav>
+      </section>
 
-      {/* Hero Section */}
-      <section className="relative px-4 py-20 sm:py-32">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-7xl font-bold text-white mb-6">
-            Master <span className="text-blue-400">Linux</span>,{' '}
-            <span className="text-cyan-400">Docker</span> &{' '}
-            <span className="text-teal-400">Kubernetes</span>
-          </h1>
-          <p className="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-            Professional training and resources to elevate your DevOps and infrastructure skills
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#courses"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg transition transform hover:scale-105"
-            >
-              Explore Courses
-            </a>
-            <a
-              href="#about"
-              className="bg-slate-700 hover:bg-slate-600 text-white font-semibold px-8 py-4 rounded-lg transition transform hover:scale-105"
-            >
-              Learn More
-            </a>
+      {/* How it works */}
+      <section id='how' className='scroll-mt-16 border-b border-white/10'>
+        <div className='mx-auto max-w-6xl px-4 py-20 sm:px-6'>
+          <h2 className='text-3xl font-bold tracking-tight text-white'>How it works</h2>
+          <p className='mt-3 max-w-2xl text-zinc-400'>Reading about commands only gets you so far. Here you run them.</p>
+          <ol className='mt-12 grid gap-px overflow-hidden border border-white/10 bg-white/10 md:grid-cols-3'>
+            {steps.map((s, i) => (
+              <li key={s.title} className='bg-background p-6'>
+                <span className='font-mono text-sm text-brand'>0{i + 1}</span>
+                <h3 className='mt-3 text-lg font-semibold text-white'>{s.title}</h3>
+                <p className='mt-2 text-sm leading-relaxed text-zinc-400'>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+          <div className='mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4'>
+            {features.map((f) => (
+              <div key={f.title}>
+                <h3 className='font-semibold text-white'>{f.title}</h3>
+                <p className='mt-2 text-sm leading-relaxed text-zinc-400'>{f.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Courses Section */}
-      <section id="courses" className="px-4 py-20 bg-slate-800/50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-white text-center mb-16">
-            Training Paths
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Linux Card */}
-            <div id="linux" className="bg-slate-900 border border-slate-700 rounded-xl p-8 hover:border-blue-500 transition transform hover:scale-105">
-              <div className="text-5xl mb-4">🐧</div>
-              <h3 className="text-3xl font-bold text-blue-400 mb-4">Linux</h3>
-              <p className="text-gray-300 mb-6">
-                Master the fundamentals of Linux system administration, shell scripting,
-                networking, and security practices.
-              </p>
-              <ul className="space-y-2 text-gray-400 mb-6">
-                <li>✓ System Administration</li>
-                <li>✓ Shell Scripting (Bash)</li>
-                <li>✓ Networking & Security</li>
-                <li>✓ Package Management</li>
-                <li>✓ Process Management</li>
-              </ul>
-              <Link href="/linux" className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition text-center">
-                Start Learning
+      {/* Tracks */}
+      <section id='courses' className='scroll-mt-16 border-b border-white/10'>
+        <div className='mx-auto max-w-6xl px-4 py-20 sm:px-6'>
+          <h2 className='text-3xl font-bold tracking-tight text-white'>Training paths</h2>
+          <p className='mt-3 max-w-2xl text-zinc-400'>Each path has its own lab machine, set up for what you are learning.</p>
+          <div className='mt-12 grid gap-6 md:grid-cols-3'>
+            {courses.map((c) => (
+              <Link key={c.id} href={`/${c.id}`} className={`group flex flex-col border border-white/10 bg-zinc-900/40 p-6 transition ${c.accent.border}`}>
+                <div className='flex items-center justify-between'>
+                  <h3 className={`text-2xl font-bold ${c.accent.text}`}>{c.name}</h3>
+                  <span
+                    className={`border px-2 py-0.5 text-[11px] font-semibold ${c.labsReady ? `${c.accent.ring} ${c.accent.bg} ${c.accent.text}` : 'border-white/15 text-zinc-400'}`}
+                  >
+                    {c.labsReady ? 'Labs live' : 'Labs coming soon'}
+                  </span>
+                </div>
+                <p className='mt-3 text-sm leading-relaxed text-zinc-400'>{c.tagline}</p>
+                <div className='mt-5 border border-white/10 bg-zinc-950 p-3 font-mono text-[12px] text-zinc-400'>
+                  <p className='mb-1 font-sans text-[11px] font-semibold uppercase tracking-wide text-zinc-500'>{c.machine}</p>
+                  {c.sampleCommands.map((cmd) => (
+                    <p key={cmd} className='truncate'>
+                      <span className='text-brand'>$</span> {cmd}
+                    </p>
+                  ))}
+                </div>
+                <span className='mt-6 text-sm font-semibold text-white group-hover:underline'>View the {c.name} path →</span>
               </Link>
-            </div>
-
-            {/* Docker Card */}
-            <div id="docker" className="bg-slate-900 border border-slate-700 rounded-xl p-8 hover:border-cyan-500 transition transform hover:scale-105">
-              <div className="text-5xl mb-4">🐳</div>
-              <h3 className="text-3xl font-bold text-cyan-400 mb-4">Docker</h3>
-              <p className="text-gray-300 mb-6">
-                Learn containerization from basics to advanced topics including
-                multi-stage builds, networking, and orchestration.
-              </p>
-              <ul className="space-y-2 text-gray-400 mb-6">
-                <li>✓ Container Fundamentals</li>
-                <li>✓ Dockerfile Best Practices</li>
-                <li>✓ Docker Compose</li>
-                <li>✓ Networking & Volumes</li>
-                <li>✓ Security & Optimization</li>
-              </ul>
-              <Link href="/docker" className="block w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 rounded-lg transition text-center">
-                Start Learning
-              </Link>
-            </div>
-
-            {/* Kubernetes Card */}
-            <div id="kubernetes" className="bg-slate-900 border border-slate-700 rounded-xl p-8 hover:border-teal-500 transition transform hover:scale-105">
-              <div className="text-5xl mb-4">☸️</div>
-              <h3 className="text-3xl font-bold text-teal-400 mb-4">Kubernetes</h3>
-              <p className="text-gray-300 mb-6">
-                Deep dive into Kubernetes orchestration, deployment strategies,
-                scaling, and production-ready cluster management.
-              </p>
-              <ul className="space-y-2 text-gray-400 mb-6">
-                <li>✓ Cluster Architecture</li>
-                <li>✓ Pods & Deployments</li>
-                <li>✓ Services & Ingress</li>
-                <li>✓ ConfigMaps & Secrets</li>
-                <li>✓ Monitoring & Logging</li>
-              </ul>
-              <Link href="/kubernetes" className="block w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 rounded-lg transition text-center">
-                Start Learning
-              </Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="px-4 py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-8">
-              About LiDoKu
-            </h2>
-            <p className="text-xl text-gray-300 mb-6 max-w-4xl mx-auto">
-              LiDoKu provides comprehensive training and resources for modern DevOps technologies.
-              Whether you&apos;re a beginner or an experienced professional, our courses are designed
-              to help you master Linux, Docker, and Kubernetes.
+      {/* About + instructor */}
+      <section id='about' className='scroll-mt-16 border-b border-white/10'>
+        <div className='mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2'>
+          <div>
+            <h2 className='text-3xl font-bold tracking-tight text-white'>About LiDoKu</h2>
+            <p className='mt-5 text-zinc-400'>
+              LiDoKu provides comprehensive training and resources for modern DevOps technologies. Whether you&apos;re a beginner or an experienced
+              professional, our courses are designed to help you master Linux, Docker, and Kubernetes.
             </p>
-            <p className="text-lg text-gray-400 max-w-4xl mx-auto">
-              Our mission is to make infrastructure and container technologies accessible and
-              practical for everyone in the software development ecosystem.
+            <p className='mt-4 text-zinc-400'>
+              Our mission is to make infrastructure and container technologies accessible and practical for everyone in the software development
+              ecosystem.
             </p>
           </div>
-
-          {/* Instructor Section */}
-          <div className="mt-16">
-            <h3 className="text-3xl font-bold text-white text-center mb-12">
-              Led by Industry Expert
-            </h3>
-            <div className="bg-slate-900 border border-slate-700 rounded-xl p-8 md:p-12 max-w-4xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                {/* Profile Image Placeholder */}
-                <div className="flex-shrink-0">
-                  <div className="w-32 h-32 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-4xl font-bold">
-                    SK
-                  </div>
-                </div>
-
-                {/* Instructor Details */}
-                <div className="flex-1 text-center md:text-left">
-                  <h4 className="text-2xl font-bold text-white mb-2">
-                    Suma Kadur
-                  </h4>
-                  <p className="text-cyan-400 font-semibold mb-4">
-                    Head of Cloud DevOps/SecOps/SRE
-                  </p>
-                  <p className="text-gray-300 mb-4">
-                    Strategic Leader in Infrastructure & Developer Experience
-                  </p>
-                  <p className="text-gray-400 mb-6">
-                    With over 20 years of experience driving CloudOps, AI Operations,
-                    Platform Engineering & Compliance, Suma brings deep expertise and
-                    real-world insights to every course.
-                  </p>
-
-                  <div className="bg-slate-800 border border-slate-600 rounded-lg p-4">
-                    <h5 className="text-sm font-semibold text-blue-300 mb-2">Expertise Areas</h5>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full text-sm">Cloud DevOps</span>
-                      <span className="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-sm">SecOps</span>
-                      <span className="bg-teal-900/50 text-teal-200 px-3 py-1 rounded-full text-sm">SRE</span>
-                      <span className="bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full text-sm">Platform Engineering</span>
-                      <span className="bg-cyan-900/50 text-cyan-200 px-3 py-1 rounded-full text-sm">AI Operations</span>
-                      <span className="bg-teal-900/50 text-teal-200 px-3 py-1 rounded-full text-sm">Compliance</span>
-                    </div>
-                  </div>
-                </div>
+          <div className='border border-white/10 bg-zinc-900/40 p-6 sm:p-8'>
+            <p className='text-xs font-semibold uppercase tracking-wide text-zinc-500'>Led by an industry expert</p>
+            <div className='mt-5 flex items-start gap-5'>
+              <div className='flex size-16 shrink-0 items-center justify-center bg-gradient-to-br from-brand to-sky-500 text-xl font-bold text-zinc-950'>
+                SK
+              </div>
+              <div>
+                <h3 className='text-xl font-bold text-white'>Suma Kadur</h3>
+                <p className='font-semibold text-brand'>Head of Cloud DevOps/SecOps/SRE</p>
+                <p className='mt-1 text-sm text-zinc-300'>Strategic Leader in Infrastructure &amp; Developer Experience</p>
               </div>
             </div>
+            <p className='mt-5 text-sm leading-relaxed text-zinc-400'>
+              With over 20 years of experience driving CloudOps, AI Operations, Platform Engineering &amp; Compliance, Suma brings deep expertise
+              and real-world insights to every course.
+            </p>
+            <div className='mt-5 flex flex-wrap gap-2'>
+              {['Cloud DevOps', 'SecOps', 'SRE', 'Platform Engineering', 'AI Operations', 'Compliance'].map((t) => (
+                <span key={t} className='border border-white/10 px-2.5 py-1 text-xs text-zinc-300'>
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 border-t border-slate-700 px-4 py-8">
-        <div className="max-w-7xl mx-auto text-center text-gray-400">
-          <p>&copy; 2025 LiDoKu. All rights reserved.</p>
+      {/* CTA */}
+      <section>
+        <div className='mx-auto max-w-3xl px-4 py-20 text-center sm:px-6'>
+          <h2 className='text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl'>Your first lab machine is a click away</h2>
+          <p className='mt-4 text-zinc-400'>Create an account, open a lesson, and start typing.</p>
+          <a href={SIGNUP_URL} className='mt-8 inline-block bg-brand px-8 py-3 font-semibold text-zinc-950 transition hover:brightness-110'>
+            Start learning
+          </a>
         </div>
-      </footer>
+      </section>
+
+      <SiteFooter />
     </div>
   );
 }

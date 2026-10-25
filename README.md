@@ -70,48 +70,25 @@ git push
 ## Project Structure
 
 ```
-oct2025/
 ├── app/
-│   ├── page.tsx              # Home page
-│   ├── layout.tsx            # Root layout with metadata
-│   ├── globals.css           # Global styles
-│   ├── linux/
-│   │   └── page.tsx          # Linux course page
-│   ├── docker/
-│   │   └── page.tsx          # Docker course page
-│   └── kubernetes/
-│       └── page.tsx          # Kubernetes course page
-├── public/                   # Static assets (images, etc.)
-├── components/               # Reusable React components (future)
-├── tailwind.config.ts        # Tailwind CSS configuration
-├── tsconfig.json             # TypeScript configuration
-├── next.config.ts            # Next.js configuration
-├── package.json              # Dependencies
-├── DEPLOYMENT.md             # Detailed deployment guide
-├── QUICKSTART.md             # Quick reference guide
-└── README.md                 # This file
+│   ├── page.tsx              # Home: hero with live-terminal demo, how it works, paths, about
+│   ├── layout.tsx            # Fonts (Inter, JetBrains Mono) and site metadata
+│   ├── globals.css           # Dark theme shared with the Lidoku app (zinc + teal brand)
+│   └── linux/ docker/ kubernetes/page.tsx   # One line each: <CoursePage course=... />
+├── components/
+│   ├── site-chrome.tsx       # Nav + footer used by every page
+│   ├── terminal-demo.tsx     # Animated replay of real lab sessions (client component)
+│   └── course-page.tsx       # Layout for a training path
+├── lib/courses.ts            # All course content + the app links
+└── tailwind.config.ts
 ```
 
 ## Customization
 
-### Update Course Content
-
-Each course page has a highlighted section for custom content:
-- Edit `app/linux/page.tsx` for Linux course details
-- Edit `app/docker/page.tsx` for Docker course details
-- Edit `app/kubernetes/page.tsx` for Kubernetes course details
-
-### Add Instructor Photo
-
-1. Place image in `public/` folder
-2. Edit `app/page.tsx` around line 150
-3. Replace avatar placeholder with image component
-
-### Modify Branding
-
-- **Site Title:** Edit `app/layout.tsx` (line 5)
-- **Logo:** Edit `app/page.tsx` (line 11)
-- **Colors:** Adjust in individual page components or `tailwind.config.ts`
+- **Course content:** everything (modules, skills, outcomes, sample lab commands) is in `lib/courses.ts`.
+- **Labs live / coming soon:** `labsReady` per course in `lib/courses.ts`. Kubernetes is `false` until its lab machines ship.
+- **Where "Start learning" goes:** set `NEXT_PUBLIC_APP_URL` in Vercel to the Lidoku app's URL (default `https://app.lidoku.com`); sign-up links go to `$NEXT_PUBLIC_APP_URL/auth/signup`.
+- **Instructor photo:** put an image in `public/` and replace the `SK` block in `app/page.tsx`.
 
 ## Deployment
 
